@@ -26,7 +26,7 @@ jobs:
   anchor-test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    container: docker.io/ochaloup/projectserum-build:v0.26.0_rust1.66_sol1.14.12
+    container: docker.io/ochaloup/projectserum-build:v0.26.0_rust1.68-nightly_sol1.14.12
     steps:
       - uses: actions/checkout@v3
       - name: Set nightly toolchain
