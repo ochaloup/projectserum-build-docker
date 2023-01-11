@@ -1,0 +1,47 @@
+= Solana Anchor test docker image
+
+Docker image used at testing with github actions.
+It's only updated `projectserum/build`. No speciality.
+
+Available tags: https://hub.docker.com/r/ochaloup/projectserum-build/tags
+
+*Reason for not using `projectserum/build` image:*
+
+* not using the latest Solana
+* `bpf` uses older Rurst thus some features could be missing (e.g., `enum` `Default`)
+* otherwise no reason
+
+
+[source,yaml]
+----
+name: Anchor Test
+
+on:
+  push:
+     branches: [ main ]
+  pull_request:
+     branches: [ main ]
+
+jobs:
+  anchor-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    container: docker.io/ochaloup/projectserum-build:v0.26.0_rust1.66_sol1.14.12
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set nightly toolchain
+        run: rustup default nightly
+      - name: List rustup toolchains
+        run: rustup toolchain list
+      - name: Generate new keygen
+        run: solana-keygen new --no-bip39-passphrase
+      - name: Set solana target cluster to local
+        run: solana config set --url http:localhost:8899
+      - name: Check solana config
+        run: solana config get
+      - name: setup yarn
+        uses: mskelton/setup-yarn@v1.3.0
+      - name: yarn test
+        run: |
+          yarn test
+----
