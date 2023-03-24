@@ -6,7 +6,7 @@ RUN rustup install nightly
 RUN rustup default nightly 
 RUN rustup toolchain list
 
-RUN sh -c "$(curl -sSfL https://release.solana.com/v1.15.2/install)"
+RUN sh -c "$(curl -sSfL https://release.solana.com/v1.14.16/install)"
 
 RUN apt-get install -y pkg-config build-essential libudev-dev
 RUN cargo install --git https://github.com/project-serum/anchor avm --locked --force
