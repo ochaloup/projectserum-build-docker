@@ -8,7 +8,7 @@ Available tags: https://hub.docker.com/r/ochaloup/projectserum-build/tags
 *Reason for not using `projectserum/build` image:*
 
 * not using the latest Solana
-* `bpf` uses older Rurst thus some features could be missing (e.g., `enum` `Default`)
+* `bpf` uses older Rurt thus some features could be missing (e.g., `enum` `Default`)
 * otherwise no reason
 
 
@@ -18,16 +18,16 @@ name: Anchor Test
 
 on:
   push:
-     branches: [ main ]
+     branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+     branches: [ main ]
 
 jobs:
   anchor-test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     # from https://github.com/ochaloup/projectserum-build-docker
-    container: docker.io/ochaloup/projectserum-build:v0.27.0_rust1.68-nightly_sol1.14.16_avm
+    container: docker.io/ochaloup/projectserum-build:v0.28.0_sol1.14.21_avm-v2
     steps:
       - name: /root/.cargo to PATH
         run: |
@@ -37,7 +37,7 @@ jobs:
       - name: Info on AVM
         run: |
           avm list
-          avm use 0.27.0
+          avm use 0.28.0
       - name: Checkout project
         uses: actions/checkout@v3
 
@@ -48,16 +48,12 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 7
+          version: 8
 
       - name: Set nightly toolchain
         run: rustup default nightly
       - name: List rustup toolchains
         run: rustup toolchain list
-      - name: Generate new keygen
-        run: solana-keygen new --no-bip39-passphrase
-      - name: Set solana target cluster to local
-        run: solana config set --url http:localhost:8899
       - name: Check solana config
         run: solana config get
 
