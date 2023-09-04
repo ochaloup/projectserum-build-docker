@@ -15,7 +15,7 @@ RUN rustup toolchain install nightly --allow-downgrade --profile minimal --compo
     rustup default nightly && \
     rustup toolchain list
 
-RUN sh -c "$(curl -sSfL https://release.solana.com/v1.16.4/install)"
+RUN sh -c "$(curl -sSfL https://release.solana.com/v1.16.12/install)"
 
 RUN cargo install --git https://github.com/project-serum/anchor avm --locked --force && \
     avm install 0.28.0 && \
