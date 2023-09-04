@@ -11,8 +11,8 @@ ENV PATH="${PATH}:/root/.cargo/bin"
 RUN echo 'source $HOME/.cargo/env' >> $HOME/.bashrc
 
 RUN rustup toolchain install nightly --allow-downgrade --profile minimal --component clippy && \
-    rustup install nightly && \
-    rustup default nightly && \
+    rustup install 1.69.0 && \
+    rustup default 1.69.0 && \
     rustup toolchain list
 
 RUN sh -c "$(curl -sSfL https://release.solana.com/v1.16.12/install)"
